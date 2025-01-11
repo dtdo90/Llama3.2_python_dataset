@@ -1,4 +1,4 @@
-## Fine-tuning LLAMA 3.2-1B on Instruction Dataset
+## Fine-tuning LLAMA 3.2-1B on Python Dataset
 
 This repository demonstrates the process of fine-tuning **LLAMA 3.2 1B** on a Python instruction dataset from hugging face https://huggingface.co/datasets/iamtarun/python_code_instructions_18k_alpaca. The goal is to enhance the model's capability in generating and understanding Python code.
 
