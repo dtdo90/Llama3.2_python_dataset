@@ -4,9 +4,10 @@ import torch
 
 def load_fine_tune_model(base_model_id, saved_weights):
     # Load tokenizer and base model
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     tokenizer = AutoTokenizer.from_pretrained(base_model_id)
     base_model = AutoModelForCausalLM.from_pretrained(base_model_id)
-    base_model.to("cpu")
+    base_model.to(device)
     
     # Create LoRA config - make sure these parameters match your training configuration
     peft_config = LoraConfig(
@@ -15,39 +16,20 @@ def load_fine_tune_model(base_model_id, saved_weights):
         lora_dropout=0.05,
         bias="none",
         task_type="CAUSAL_LM",
-        target_modules=[
-            'q_proj',
-            'k_proj',
-            'v_proj',
-        ],
+        target_modules=['q_proj','k_proj','v_proj'],
     )
     
     # Initialize PeftModel
     lora_model = PeftModel(base_model, peft_config)
     
     # Load the saved weights
-    state_dict = torch.load(saved_weights,map_location=torch.device('cpu'))
-    
-    # Check the keys in the state dict
-    print("Original state dict keys:", state_dict.keys())
-    
+    state_dict = torch.load(saved_weights,map_location=device)
+        
     # Create new state dict with correct prefixes and structure
     new_state_dict = {}
     for key, value in state_dict.items():
-        if 'model.model.' in key:
-            # If the key already has model.model., just add base_
-            new_key = f"base_{key}"
-        elif 'model.' in key:
-            # If the key has only model., add base_model.
-            new_key = f"base_{key}"
-        else:
-            # If the key has neither, add the full prefix
-            new_key = f"base_model.model.{key}"
-        
-        # Print shape information for debugging
-        print(f"Converting {key} -> {new_key}")
-        print(f"Shape: {value.shape}")
-        
+        # key start with "model"-> add "base_" to the new key for base_model
+        new_key = f"base_{key}"        
         new_state_dict[new_key] = value
     
     # Load the weights with strict=False to allow partial loading
@@ -136,5 +118,5 @@ if __name__=="__main__":
     print(f"Trainable parameters: {trainable_params:,}")
 
     # generate
-    prompt = "Program a Flask API that will convert an image to grayscale."
-    print(generate_ft(model_ft, prompt, tokenizer, max_new_tokens=256))
+    prompt = "Program a function that read through video frames and write it into a new video."
+    print(generate_ft(model_ft, prompt, tokenizer, max_new_tokens=512))
