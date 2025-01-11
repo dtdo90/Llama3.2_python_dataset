@@ -6,6 +6,8 @@ This repository demonstrates the process of fine-tuning **LLAMA 3.2 1B** on a Py
 - Training Framework: The training uses the SFTTrainer from the trl (Transformer Reinforcement Learning) library.
 - Parameter Optimization: QLoRA (Low-Rank Adaptation) is applied to reduce the number of parameters and improve efficiency during the fine-tuning process.
 
+### Evaluation
+Run eval_ollama_8B.ipynb to score the model's performance.
 
 ### Interactive API with chainlit
 Interact with the fine-tuned model through a web API by running the command **chainlit run app.py**. This will launch an interactive interface for the model.
