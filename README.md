@@ -12,3 +12,7 @@ Run eval_ollama_8B.ipynb to score the model's performance.
 ### Interactive API with chainlit
 Interact with the fine-tuned model through a web API by running the command **chainlit run app.py**. This will launch an interactive interface for the model.
 
+### Example
+Below is an example of the model solving a leetcode question
+
+![Alt text](experiments/leetcode.jpg)
