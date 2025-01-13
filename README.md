@@ -15,4 +15,4 @@ Interact with the fine-tuned model through a web API by running the command **ch
 ### Example
 Below is an example of the model solving a leetcode question
 
-![Alt text](experiments/leetcode.jpg)
+![Alt text](experiments/leetcode.png)
