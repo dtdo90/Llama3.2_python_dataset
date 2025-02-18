@@ -41,7 +41,7 @@ def load_fine_tune_model(base_model_id, saved_weights):
     return lora_model, tokenizer
 
 
-def generate_ft(model, prompt, tokenizer, max_new_tokens, context_size=256, temperature=0.0, top_k=1, eos_id=[128001, 128009]):
+def generate_ft(model, prompt, tokenizer, max_new_tokens, context_size=100, temperature=0.0, top_k=1, eos_id=[128001, 128009]):
     """
     Generate text using a language model with proper dtype handling and improved sampling.
     """
@@ -118,5 +118,5 @@ if __name__=="__main__":
     print(f"Trainable parameters: {trainable_params:,}")
 
     # generate
-    prompt = "Program a function that read through video frames and write it into a new video."
-    print(generate_ft(model_ft, prompt, tokenizer, max_new_tokens=512))
+    prompt = "Given an array nums of integers, return how many of them contain an even number of digits."
+    print(generate_ft(model_ft, prompt, tokenizer, max_new_tokens=256))

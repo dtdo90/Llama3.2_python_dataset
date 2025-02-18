@@ -33,7 +33,7 @@ async def main(message: chainlit.Message):
         model=model_ft, 
         prompt=prompt,
         tokenizer=tokenizer,
-        max_new_tokens=256,
+        max_new_tokens=100,
         temperature=0.8,
         top_k=5
         )
